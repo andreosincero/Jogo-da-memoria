@@ -9,20 +9,22 @@
 
     var escolhidas = [];
 
-    var modo = "0";
-    
-    // easy();
-    // hard();
+    let modo_normal = 0;
+    let modo_easy = 0;
+    let modo_hard = 0;
+
+    let dificuldade = ["normal","easy","hard"];
+    let modo = dificuldade[0];
 
     function normal(){
-        
-        modo = "normal";
 
-        var acertos = 0;
+        contartempo();
+        
+        modo = dificuldade[0];
+
+        modo_normal = 1;
     
         var imagens = [];
-    
-        var escolhidas = [];
 
         for (var i=0;i<32;i++){
             var card = document.getElementById("card" + i);
@@ -85,17 +87,23 @@
             frente[i].setAttribute("id",imagens[i].id);
             console.log(frente[i].id)
         }
+        document.getElementById("easy").style.backgroundColor= "#bababa";
+        document.getElementById("easy").onclick="false";
+        document.getElementById("hard").style.backgroundColor= "#bababa";
+        document.getElementById("hard").onclick="false";
+        document.getElementById("gameover").style.zIndex = -1;
+        document.getElementById("gameover").removeEventListener("click",restart,false);
     }
     
     function easy(){
-        
-        modo = "easy";
 
-        var acertos = 0;
+        contartempo();
+
+        modo = dificuldade[1];
+        
+        modo_easy = 1;
     
         var imagens = [];
-    
-        var escolhidas = [];
 
         for (var i=0;i<32;i++){
             var card = document.getElementById("card" + i);
@@ -163,17 +171,23 @@
             var card = document.getElementById("card" + i);
             card.style.display = "none";
         }
+        document.getElementById("normal").style.backgroundColor= "#bababa";
+        document.getElementById("normal").onclick="false";
+        document.getElementById("hard").style.backgroundColor= "#bababa";
+        document.getElementById("hard").onclick="false";
+        document.getElementById("gameover").style.zIndex = -1;
+        document.getElementById("gameover").removeEventListener("click",restart,false);
     }
     
     function hard(){
-        
-        modo = "hard";
 
-        var acertos = 0;
+        contartempo();
+
+        modo = dificuldade[2];
+        
+        modo_hard = 1;
     
         var imagens = [];
-    
-        var escolhidas = [];
 
         for (var i=0;i<32;i++){
             var card = document.getElementById("card" + i);
@@ -257,6 +271,12 @@
             var card = document.getElementById("card" + i);
             card.style.display = "0";
         }
+        document.getElementById("normal").style.backgroundColor= "#bababa";
+        document.getElementById("normal").onclick="false";
+        document.getElementById("easy").style.backgroundColor= "#bababa";
+        document.getElementById("easy").onclick="false";
+        document.getElementById("gameover").style.zIndex = -1;
+        document.getElementById("gameover").removeEventListener("click",restart,false);
     }
 
     function virar(){
@@ -280,24 +300,27 @@
 
                     acerto_sinal();
 
-                    acertos = acertos + 1;
+                    acertos++;
 
                     escolhidas=[];
 
-                    switch(acertos){
-                        case 8:
-                        if(modo == "normal"){
-                            gameover();
-                        }
-                        case 5:
-                        if(modo == "easy"){
-                            gameover();
-                        }
-                        case 16:
-                        if(modo == "hard"){
-                            gameover();
-                        }
-                    }
+                    // switch(acertos){
+                    //     // case 5:
+                    //     // if(modo == "easy"){
+                    //     //     gameover();
+                    //     // }
+                    //     // case 8:
+                    //     // if(modo == "normal"){
+                    //     //     gameover();
+                    //     // }
+                    //     case 16:
+                    //     if(modo == "hard"){
+                    //         gameover();
+                    //     }
+                    // }
+                    if(modo_normal == 1 && acertos == 8){gameover();pause();}
+                    if(modo_easy == 1 && acertos == 5){gameover();pause();}
+                    if(modo_hard == 1 && acertos == 16){gameover();pause();}
                 }
             }
         }
@@ -308,6 +331,7 @@
             escolhidas[1].childNodes[3].classList.toggle("flipada");
             escolhidas=[];
         }
+        document.getElementById("contador").value = acertos;
     }
 
     
@@ -328,15 +352,63 @@
         
     }
 
+    // window.setTimeout(function(){
+    //     gameover
+    // },1000);
+
     function gameover(){
         document.getElementById("gameover").style.zIndex = 1;
+        document.getElementById("gameover").addEventListener("click",restart,false)
     }
 
     function restart(){
         document.getElementById("gameover").style.zIndex = -1;
+        pause();
         location.reload();
     }
 
+    
 
+
+
+    let mm = 0;
+    let ss = 0;
+    let ds = 0 
+
+    let tempo = 10; //miésimos em um segundo;
+    let cron;
+
+    function contartempo(){
+        cron = setInterval(() => {timer();}, tempo);
+    }
+
+    function pause(){
+        clearInterval(cron);
+    }
+
+    function stop(){
+        clearInterval(cron);
+        mm = 0;
+        ss = 0;
+        ds = 00;
+        document.getElementById("tempo").value = "00:00,00";
+    }
+
+    function timer(){
+        ds++;
+
+        if (ds == 100){
+            ds = 0;
+            ss++;
+
+            if (ss == 60){
+                ss = 0;
+                mm++;
+            }
+        }
+
+        var formato = (mm < 10 ? "0" + mm : mm) + ":" + (ss < 10 ? "0" + ss : ss) + "," + (ds < 10 ? "0" + ds : ds);
+        document.getElementById("tempo").value = formato;
+    }
 
 // }());

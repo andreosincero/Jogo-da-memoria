@@ -35,6 +35,7 @@ body{
 
 #dificuldade{
     margin: 0 auto;
+    margin-left: 25px;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -117,4 +118,21 @@ body{
 }
 #gameoverimg{
     margin-top: 100px;
+}
+
+#contador{
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    margin: auto 25px;
+    font-size: 25px;
+}
+
+#tempo{
+    color: #000;
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    margin: auto 25px;
+    font-size: 25px;
 }

@@ -176,13 +176,18 @@
         </div>
 
         <div id="menu">
-            <div id ="contador"></div>
-            <div id="tempo"></div>
-            <div id="dificuldade" class="central">
-                <button id="easy" class="botoes_principais" onclick="easy()">Fácil</button>
-                <button id="normal" class="botoes_principais" onclick="normal()">Médio</button>
-                <button id="hard" class="botoes_principais" onclick="hard()">Difícil</button>
+            <div id="stopwatch">
+                <input id="tempo" value="00:00,00">
             </div>
+
+            <div><input id ="contador" type="text" value="0"></div>
+            
+            <div id="dificuldade" class="central">
+                <button id="easy" value="" class="botoes_principais" onclick="easy()">Fácil</button>
+                <button id="normal" value="" class="botoes_principais" onclick="normal()">Médio</button>
+                <button id="hard" value="" class="botoes_principais" onclick="hard()">Difícil</button>
+            </div>
+            <div id="resetar"><button style="background-color: transparent;border: none;margin-right: 50px;" onclick="restart()"><img src="./Restart.png" style="width: 50px;"></button></div>
         </div>
 
         <div id="gameover">
